@@ -8,12 +8,10 @@ function populateTable(mappings) {
     const tableBody = document.getElementById('table-body');
 
     mappings.forEach(mapping => {
-        // Determine if we need to span the target name cell across multiple rows
-        const rowspan = mapping.variations.length;
+        // Determine the total number of rows needed, including the extra empty row
+        const totalRows = mapping.variations.length + 1;
 
-
-
-        // Function to create buttons
+        // Function to create edit and delete buttons
         const createButtons = () => {
             const buttonCell = document.createElement('td');
             const editButton = document.createElement('button');
@@ -21,55 +19,71 @@ function populateTable(mappings) {
             editButton.onclick = function() {
                 // Logic to handle editing
                 alert('Edit button clicked');
-
             };
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
             deleteButton.onclick = function() {
                 // Logic to handle deletion
-                alert('delete button clicked');
-
+                alert('Delete button clicked');
             };
+
+
 
             buttonCell.appendChild(editButton);
             buttonCell.appendChild(deleteButton);
             return buttonCell;
         };
 
-        
+        const createAddButton = () => {
+            const addButtonCell = document.createElement('td');
+            const addButton = document.createElement('button');
+            addButton.textContent = 'Add Variation';
+            addButton.onclick = function() {
+                alert('Add Variation clicked');
+            };
+            addButtonCell.appendChild(addButton);
+            return addButtonCell;
+        };
 
-
-
-        // Create the first row for each mapping
-        const firstRow = document.createElement('tr');
-        const targetCell = document.createElement('td');
-        targetCell.textContent = mapping.targetName;
-        targetCell.rowSpan = rowspan; // Set the rowspan to the number of variations
-        firstRow.appendChild(targetCell);
-
-        // Add the first variation in the second cell of the first row
-        if (rowspan > 0) {
-            const firstVariationCell = document.createElement('td');
-            firstVariationCell.textContent = mapping.variations[0];
-            firstRow.appendChild(firstVariationCell);
-            firstRow.appendChild(createButtons()); // Add buttons for the first variation
-        }
-
-        // Append the first row to the table body
-        tableBody.appendChild(firstRow);
-
-        // Add subsequent rows for the remaining variations
-        for (let i = 1; i < rowspan; i++) {
+        // Create rows for each variation
+        mapping.variations.forEach((variation, index) => {
             const variationRow = document.createElement('tr');
+
+            // For the first variation, add the target name cell
+            if (index === 0) {
+                const targetCell = document.createElement('td');
+                targetCell.textContent = mapping.targetName;
+                targetCell.rowSpan = totalRows; // Span across all variation rows plus the extra empty row
+                variationRow.appendChild(targetCell);
+            }
+
+            // Variation cell
             const variationCell = document.createElement('td');
-            variationCell.textContent = mapping.variations[i];
+            variationCell.textContent = variation;
             variationRow.appendChild(variationCell);
-            variationRow.appendChild(createButtons()); // Add buttons for each variation
+
+            // Edit and Delete buttons
+            variationRow.appendChild(createButtons());
+
+            // Append the variation row to the table body
             tableBody.appendChild(variationRow);
-        }
+        });
+
+        // Add the extra empty row
+        const emptyRow = document.createElement('tr');
+        const emptyVariationCell = document.createElement('td'); // This will be the empty cell
+        emptyRow.appendChild(emptyVariationCell);
+        emptyRow.appendChild(createAddButton()); // Add buttons for the empty row
+        tableBody.appendChild(emptyRow);
     });
 }
+
+// Call `populateTable` when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    populateTable(renameMappings);
+});
+
 
 // Call `populateTable` when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {

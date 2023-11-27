@@ -35,7 +35,12 @@ table, th, td {
 }
 
 .table-container {
-    margin: 0 auto;
-    margin-top: 100px;
+    margin: 100px auto;
     width: 80%;
+}
+
+button {
+    text-align: center;
+
+
 }
