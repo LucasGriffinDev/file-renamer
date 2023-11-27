@@ -1,0 +1,5 @@
+{
+  "watch": ["main", "render", "shared"],
+  "exec": "electron .",
+  "ext": "js,json,css,html"
+}

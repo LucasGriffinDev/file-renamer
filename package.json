@@ -5,12 +5,13 @@
   "main": "main/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^27.1.2"
+    "electron": "^27.1.2",
+    "nodemon": "^3.0.1"
   }
 }

@@ -30,8 +30,9 @@
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 2px solid black;
     border-collapse: collapse;
+    padding: 1em;
 }
 
 .table-container {
@@ -41,6 +42,8 @@ table, th, td {
 
 button {
     text-align: center;
-
-
+    background: red;
+    margin: 0.25em;
+    padding: 1em 1.5em;
+    border-radius: 0.5em;
 }
