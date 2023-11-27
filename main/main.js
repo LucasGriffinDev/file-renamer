@@ -5,11 +5,12 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false
         }
     });
 
-    win.loadFile('index.html');
+    win.loadFile('./render/index.html');
 }
 
 app.whenReady().then(createWindow);

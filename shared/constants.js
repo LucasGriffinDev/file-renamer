@@ -1,0 +1,95 @@
+const renameMappings = [
+    {
+        targetName: "0. Nomination form to OES",
+        variations: [
+            "Screenshot",
+            "0._Nomination_form_sent_to_OES",
+            "0._Nomination_form_to_OES",
+            "0._Nomination_Form_sent_to_OES",
+            "0._Nomination_to_OES"
+        ]
+    },
+    {
+        targetName: "1. Nomination Form",
+        variations: [
+            "nominationForm",
+            "Nomination Form",
+            "1._Nomination_Form"
+        ]
+    },
+    {
+        targetName: "2. Site Assessment",
+        variations: [
+            "siteAssessment",
+            "Site Assessment",
+            "2._Site_Assessment",
+            "site assessment",
+
+        ]
+    },
+    {
+        targetName: "3. Tax Invoice",
+        variations: [
+            "taxInvoice",
+            "Tax_Invoice"
+        ]
+    },
+    {
+        targetName: "4. Proof of Payment",
+        variations: [
+            "receipt",
+            "4._Receipt",
+            "4._Proof_of_Payment"
+        ]
+    },
+    {
+        targetName: "5. CoC",
+        variations: [
+            "Coc",
+            "5._CoC"
+        ]
+    },
+    {
+        targetName: "6. Post Implementation",
+        variations: [
+            "postImplementation",
+            "6._Post_Implementation",
+            "Post Implement Form",
+            "PID"
+        ]
+    },
+    {
+        targetName: "7. Proof of Decommission",
+        variations: [
+            "image2",
+            "7._Proof_of_Decomission",
+            "7._Proof_of_decomission",
+            "7._Proof_of_Decommission"
+        ],
+        options: {
+            moveToParent: [true, false, false, false] // This is an array of the same length as variations
+        }
+    },
+    {
+        targetName: "0. Compliance Form.pdf",
+        variations: [
+            "Compliance Form",
+            "0._Compliance_Form"
+        ]
+    },
+    {
+        targetName: "0. Calculation Output (HEERs)",
+        variations: [
+            "Calculation Output",
+            "0._Calculation_Output_(HEERs)"
+        ]
+    },
+    {
+        targetName: "8. Installer Existing System Declaration",
+        variations: [
+            "insta"
+        ]
+    }
+];
+
+module.exports = renameMappings;

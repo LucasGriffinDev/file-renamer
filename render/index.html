@@ -4,7 +4,7 @@
     <title>Electron App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- Add your CSS here -->
 </head>
 <body>
@@ -12,8 +12,22 @@
 <button id="toggleButton">Toggle</button>
 <div id="slider" >OFF</div>
 </div>
-<!-- Add your JavaScript here -->
-<script src="./functions/toggle.js"></script>
+<div class="table-container" >
+<table>
+    <thead>
+        <tr>
+            <th>Target Name</th>
+            <th>Variations</th>
+        </tr>
+    </thead>
+    <tbody id="table-body">
 
+    </tbody>
+</table>
+</div>
+<!-- Add your JavaScript here -->
+
+<script src="scripts/toggle.js"></script>
+<script src="./scripts/renderer.js"></script>
 </body>
 </html>
