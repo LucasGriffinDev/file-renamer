@@ -32,12 +32,22 @@
 table, th, td {
     border: 2px solid black;
     border-collapse: collapse;
-    padding: 1em;
+    padding: 0.25em;
 }
 
 .table-container {
+    margin:  auto;
+    width: 80%;
+
+}
+
+.folder-container {
     margin: 100px auto;
     width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
 }
 
 button {
