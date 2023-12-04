@@ -1,6 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const mappingsPath = path.join(__dirname, 'renameMappings.json');
+const { ipcRenderer } = require('electron');
+
+
+
+
+
+
+
 
 function readMappings() {
     let rawdata = fs.readFileSync(mappingsPath);
@@ -23,6 +31,23 @@ function updateVariation(parentIndex, variationIndex, newValue) {
     let mappings = readMappings();
     mappings[parentIndex].variations[variationIndex] = newValue;
     writeMappings(mappings);
+}
+function addVariation(parentIndex) {
+    console.log("Parent Index:", parentIndex)
+    ipcRenderer.invoke('show-prompt', 'Enter the new variation name:', '')
+        .then((newVariationName) => {
+            if (newVariationName) {
+                let mappings = readMappings();
+                mappings[parentIndex].variations.push(newVariationName);
+                writeMappings(mappings);
+                populateTable(mappings); // Refresh the table
+            }
+        })
+        .catch(error => {
+            console.error('Prompt error:', error);
+        });
+
+
 }
 
 function ensureMappingsFileExists() {
@@ -73,17 +98,20 @@ function createButtons(parentIndex, variationIndex) {
     return buttonCell;
 }
 
-function createAddButton() {
+function createAddButton(parentIndex) {
     const addButtonCell = document.createElement('td');
+    addButtonCell.colSpan = 3; // Span across all columns, adjust as needed
 
     const addButton = document.createElement('button');
     addButton.textContent = 'Add Variation';
+    addButton.className = 'add-button'; // Assign a class for styling if needed
     addButton.onclick = function() {
-        alert('Add Variation clicked');
+        addVariation(parentIndex);
     };
     addButtonCell.appendChild(addButton);
     return addButtonCell;
 }
+
 
 function populateTable(mappings) {
     const tableBody = document.getElementById('table-body');
@@ -114,7 +142,7 @@ function populateTable(mappings) {
         const emptyRow = document.createElement('tr');
         const emptyVariationCell = document.createElement('td');
         emptyRow.appendChild(emptyVariationCell);
-        emptyRow.appendChild(createAddButton()); // Implement createAddButton as needed
+        emptyRow.appendChild(createAddButton(parentIndex)); // Implement createAddButton as needed
         tableBody.appendChild(emptyRow);
     });
 }

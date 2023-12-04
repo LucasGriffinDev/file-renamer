@@ -100,3 +100,17 @@ button:hover {
 button:hover.edit {
     background-color: #FFB300; /* Darken the edit button on hover */
 }
+
+.add-button {
+    background-color: #28a745; /* A nice green color */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.add-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+

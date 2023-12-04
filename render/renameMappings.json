@@ -2,11 +2,13 @@
   {
     "targetName": "0. Nomination form to OES",
     "variations": [
-      "Screenshot",
-      "0._Nomination_form_sent_to_OES",
       "0._Nomination_form_to_OES",
       "0._Nomination_Form_sent_to_OES",
-      "0._Nomination_to_OES"
+      "0._Nomination_to_OES",
+      "capture",
+      "asdasdsa",
+      "testing",
+      "zxcxzc"
     ]
   },
   {
@@ -14,7 +16,7 @@
     "variations": [
       "nominationForm",
       "Nomination Form",
-      "1._Nomination_Form ssd"
+      "1._Nomination_Form"
     ]
   },
   {
