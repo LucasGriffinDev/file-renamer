@@ -3,13 +3,6 @@ const path = require('path');
 const mappingsPath = path.join(__dirname, 'renameMappings.json');
 const { ipcRenderer } = require('electron');
 
-
-
-
-
-
-
-
 function readMappings() {
     let rawdata = fs.readFileSync(mappingsPath);
     return JSON.parse(rawdata);
