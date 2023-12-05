@@ -1,0 +1,6 @@
+folder picker button
+
+delete the nswCOC file
+
+move the decomission file to target folder, and rename it.
+

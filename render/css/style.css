@@ -29,13 +29,14 @@ justify-content: space-around;
     border: none;
     width: 50px;
     height: 25px;
-    background-color: #FF4136; /* Bright red for visibility */
+    background-color: #FF4136;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.4s ease;
     text-align: center;
-    line-height: 25px; /* Vertically center the text */
-    color: white; /* White text */
+    line-height: 25px;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* Table styling */
@@ -43,7 +44,7 @@ table {
     border-collapse: collapse;
     width: 100%;
     background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 th, td {
@@ -86,6 +87,13 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
 }
 
 button:hover {

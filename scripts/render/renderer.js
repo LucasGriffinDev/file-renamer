@@ -1,17 +1,22 @@
 const fs = require('fs');
 const path = require('path');
-const mappingsPath = path.join(__dirname, 'renameMappings.json');
+const mappingsPath = path.join(__dirname, '../shared/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
+
 
 function readMappings() {
     let rawdata = fs.readFileSync(mappingsPath);
-    return JSON.parse(rawdata);
+    let jsonData = JSON.parse(rawdata);
+    return jsonData.mappings;
 }
 
-function writeMappings(mappings) {
-    let data = JSON.stringify(mappings, null, 2);
+function writeMappings(updatedMappings) {
+    let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
+    jsonData.mappings = updatedMappings;
+    let data = JSON.stringify(jsonData, null, 2);
     fs.writeFileSync(mappingsPath, data);
 }
+
 
 function deleteVariation(parentIndex, variationIndex) {
     let mappings = readMappings();
@@ -26,22 +31,20 @@ function updateVariation(parentIndex, variationIndex, newValue) {
     writeMappings(mappings);
 }
 function addVariation(parentIndex) {
-    console.log("Parent Index:", parentIndex)
     ipcRenderer.invoke('show-prompt', 'Enter the new variation name:', '')
         .then((newVariationName) => {
             if (newVariationName) {
-                let mappings = readMappings();
-                mappings[parentIndex].variations.push(newVariationName);
-                writeMappings(mappings);
-                populateTable(mappings); // Refresh the table
+                let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
+                jsonData.mappings[parentIndex].variations.push(newVariationName);
+                fs.writeFileSync(mappingsPath, JSON.stringify(jsonData, null, 2));
+                populateTable(jsonData.mappings);
             }
         })
         .catch(error => {
             console.error('Prompt error:', error);
         });
-
-
 }
+
 
 function ensureMappingsFileExists() {
     if (!fs.existsSync(mappingsPath)) {
@@ -52,6 +55,7 @@ function ensureMappingsFileExists() {
 
 function createButtons(parentIndex, variationIndex) {
     const buttonCell = document.createElement('td');
+    buttonCell.className = 'action-buttons';
     const editButton = document.createElement('button');
 
 
@@ -143,5 +147,21 @@ function populateTable(mappings) {
 ensureMappingsFileExists();
 
 document.addEventListener('DOMContentLoaded', () => {
-    populateTable(readMappings());
+    let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
+    document.getElementById('targetFolder').textContent = jsonData.settings.targetDirectory;
+    populateTable(jsonData.mappings);
+});
+
+document.getElementById('folder-picker').addEventListener('click', () => {
+    ipcRenderer.send('open-folder-dialog');
+});
+
+ipcRenderer.on('folder-selected', (event, folderPath) => {
+    document.getElementById('targetFolder').textContent = folderPath;
+    let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
+    jsonData.settings.targetDirectory = folderPath;
+    fs.writeFileSync(mappingsPath, JSON.stringify(jsonData, null, 2));
+    // Call the renaming function with the selected folder path
+    const { processFoldersForRenaming } = require('./scripts/naming/renaming');
+    processFoldersForRenaming(folderPath);
 });

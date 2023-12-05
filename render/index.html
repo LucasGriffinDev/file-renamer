@@ -10,13 +10,23 @@
 <body>
 <div class="status-bar">
 <button id="toggleButton">Toggle</button>
+    <select id="profileSelect">
+        <option value="chromagen">chromagen</option>
+        <option value="aircon">aircon</option>
+        <option value="solar">solar</option>
+    </select>
 <div id="slider" >OFF</div>
 </div>
-<div class="folder-container">
-    <h1>parent folder</h1>
-    <p id="targetFolder">C:/downloads</p>
-    <button>Pick Folder</button>
-    <button id="renameButton">rename</button>
+<div class="table-container" >
+
+<table>
+    <td>Folder to Scan</td>
+    <td id="targetFolder">C:/downloads</td>
+    <td>
+    <button id="folder-picker">Pick Folder</button>
+    </td>
+
+</table>
 </div>
 <div class="table-container" >
 
@@ -25,6 +35,7 @@
         <tr>
             <th>Target Name</th>
             <th>Variations</th>
+            <th>actions</th>
         </tr>
     </thead>
     <tbody id="table-body">
@@ -34,8 +45,8 @@
 </div>
 <!-- Add your JavaScript here -->
 
-<script src="./scripts/toggle.js"></script>
-<script src="./scripts/renderer.js"></script>
-<script src="./scripts/renaming.js"></script>
+<script src="../scripts/render/toggle.js"></script>
+<script src="../scripts/render/renderer.js"></script>
+<script src="../scripts/naming/renaming.js"></script>
 </body>
 </html>
