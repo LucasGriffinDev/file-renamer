@@ -8,25 +8,43 @@ function readMappings() {
     return jsonData.mappings;
 }
 
+const checkingTargets = [
+    {
+        check1: 'purchase name',
+        check2: 'contact details'
+    },
+];
+
+
 // This function reads the mappings and populates the checking table
 function populateCheckingTable(mappings) {
 
 
-    
-
-    
     const tableCheckingBody = document.getElementById('table-checking');
 
     tableCheckingBody.innerHTML = ''; // Clear any existing rows
 
-    mappings.forEach(mapping => {
+    mappings.forEach((mapping, index) => {
+
+
         const row = document.createElement('tr');
         const targetCell = document.createElement('td');
         const dataCheckCell = document.createElement('td');
         const resultsCheckCell = document.createElement('td');
 
         targetCell.textContent = mapping.targetName;
-        dataCheckCell.textContent = ''; // Placeholder for future data
+        if (index === 1) {
+            const purchaseNameCell = document.createElement('td');
+            purchaseNameCell.textContent = 'purchase name';
+            row.appendChild(purchaseNameCell);
+
+            const contactDetailsCell = document.createElement('td');
+            contactDetailsCell.textContent = 'contact details';
+            row.appendChild(contactDetailsCell);
+        } else {
+            dataCheckCell.textContent = ''; // Placeholder for future data
+        }
+
         resultsCheckCell.textContent = ''; // Placeholder for future data
 
         row.appendChild(targetCell);
