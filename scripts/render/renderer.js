@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const mappingsPath = path.join(__dirname, '../shared/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
+const { populateCheckingTable } = require('../scripts/automatedCompliance/checkingTable.js');
+
+
 
 
 function readMappings() {
@@ -150,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
     document.getElementById('targetFolder').textContent = jsonData.settings.targetDirectory;
     populateTable(jsonData.mappings);
+    populateCheckingTable(jsonData.mappings);
 });
 
 document.getElementById('folder-picker').addEventListener('click', () => {
@@ -165,3 +169,4 @@ ipcRenderer.on('folder-selected', (event, folderPath) => {
     const { processFoldersForRenaming } = require('./scripts/naming/renaming');
     processFoldersForRenaming(folderPath);
 });
+

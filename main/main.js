@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const userPrompt = require('electron-osx-prompt');
 const path = require('path');
 
-
+//prompt for new entry input
 ipcMain.handle('show-prompt',
     async (event, message, defaultValue) => {
         const win = new BrowserWindow({
@@ -24,6 +24,8 @@ ipcMain.handle('show-prompt',
         });
     });
 
+// to choose a new folder
+
 ipcMain.on('open-folder-dialog', (event) => {
     dialog.showOpenDialog({
         properties: ['openDirectory']
@@ -36,7 +38,7 @@ ipcMain.on('open-folder-dialog', (event) => {
     });
 });
 
-
+// the main window of the app
 function createWindow() {
     const win = new BrowserWindow({
         width: 800,

@@ -45,6 +45,11 @@ table {
     width: 100%;
     background-color: #ffffff;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
+
+}
+
+table:nth-of-type(2) {
+    margin-left: 1em
 }
 
 th, td {
@@ -65,6 +70,8 @@ th {
     margin: auto;
     width: 80%;
     padding: 20px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .folder-container {
