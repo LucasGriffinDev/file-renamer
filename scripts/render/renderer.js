@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const mappingsPath = path.join(__dirname, '../shared/chromagenProfile.json');
+const mappingsPath = path.join(__dirname, '../profiles/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
 const { populateCheckingTable } = require('../scripts/automatedCompliance/checkingTable.js');
 

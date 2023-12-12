@@ -5,7 +5,7 @@ const fs = require('fs');
 
 
 // Get the path to the user's Downloads directory from json file
-const mappingsPath = path.join(__dirname, '../../shared/chromagenProfile.json');
+const mappingsPath = path.join(__dirname, '../../profiles/chromagenProfile.json');
 
 // Read the rename mappings JSON file
 const renameMappings = JSON.parse(fs.readFileSync(mappingsPath, 'utf8')).mappings;
