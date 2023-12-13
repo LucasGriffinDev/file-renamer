@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const userPrompt = require('electron-osx-prompt');
 const path = require('path');
+const { autoUpdater } = require('electron-updater');
+
 
 //prompt for new entry input
 ipcMain.handle('show-prompt',
@@ -50,6 +52,19 @@ function createWindow() {
     });
 
     win.loadFile('./render/index.html');
+    autoUpdater.checkForUpdatesAndNotify();
+    // Event: Update Available
+    autoUpdater.on('update-available', () => {
+        ale('Update available. Downloading...');
+
+    });
+
+    // Event: Update Downloaded
+    autoUpdater.on('update-downloaded', () => {
+        console.log('Update downloaded. It will be installed on restart.');
+        autoUpdater.quitAndInstall();
+
+    });
 }
 
 app.whenReady().then(createWindow);

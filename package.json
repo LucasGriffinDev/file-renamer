@@ -37,7 +37,7 @@
     },
     "publish": {
       "provider": "github",
-      "repo": "https://github.com/LucasGriffinDev/file-renamer",
+      "repo": "file-renamer",
       "owner": "lucasgriffindev"
     }
   }
