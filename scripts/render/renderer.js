@@ -2,16 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const mappingsPath = path.join(__dirname, '../profiles/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
-const { populateCheckingTable } = require('../scripts/automatedCompliance/checkingTable.js');
+const { populateCheckingTable } = require('../scripts/render/checkingTable.js');
+const {readJson } = require('../scripts/CRUD/readJson.js');
 
-
-
-
-function readMappings() {
-    let rawdata = fs.readFileSync(mappingsPath);
-    let jsonData = JSON.parse(rawdata);
-    return jsonData.mappings;
-}
 
 function writeMappings(updatedMappings) {
     let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
@@ -22,14 +15,14 @@ function writeMappings(updatedMappings) {
 
 
 function deleteVariation(parentIndex, variationIndex) {
-    let mappings = readMappings();
+    let mappings = readJson().mappings;
     mappings[parentIndex].variations.splice(variationIndex, 1);
     writeMappings(mappings);
     populateTable(mappings); // Repopulate the table after deletion
 }
 
 function updateVariation(parentIndex, variationIndex, newValue) {
-    let mappings = readMappings();
+    let mappings = readJson().mappings;
     mappings[parentIndex].variations[variationIndex] = newValue;
     writeMappings(mappings);
 }
@@ -65,7 +58,7 @@ function createButtons(parentIndex, variationIndex) {
     editButton.textContent = 'Edit';
     editButton.className = 'edit';
     editButton.onclick = function() {
-        let mappings = readMappings();
+        let mappings = readJson().mappings;
         const currentText = mappings[parentIndex].variations[variationIndex];
         const inputField = document.createElement('input');
         inputField.type = 'text';
@@ -75,7 +68,7 @@ function createButtons(parentIndex, variationIndex) {
         inputField.onkeypress = function(event) {
             if (event.key === 'Enter') {
                 updateVariation(parentIndex, variationIndex, inputField.value);
-                populateTable(readMappings()); // Refresh the table
+                populateTable(readJson().mappings); // Refresh the table
             }
         };
 
