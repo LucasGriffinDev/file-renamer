@@ -5,18 +5,40 @@
   "main": "main/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^27.1.2",
+    "electron-builder": "^24.9.1",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
     "electron-osx-prompt": "^1.4.1",
     "electron-prompt": "^1.7.0",
-    "smalltalk": "^4.1.2"
+    "electron-updater": "^6.1.7"
+  },
+  "build": {
+    "appId": "get.file-renamer.1.0.0",
+    "productName": "File Renamer",
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "your.app.category.type"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"]
+    },
+    "publish": {
+      "provider": "github",
+      "repo": "https://github.com/LucasGriffinDev/file-renamer",
+      "owner": "lucasgriffindev"
+    }
   }
 }
