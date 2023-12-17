@@ -55,7 +55,7 @@ function createButtons(parentIndex, variationIndex) {
 
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
+    deleteButton.textContent = 'X';
     deleteButton.className = 'delete-button';
     deleteButton.onclick = function() {
         deleteVariation(parentIndex, variationIndex); // Delete the variation
@@ -70,7 +70,7 @@ function createButtons(parentIndex, variationIndex) {
 function createAddButton(parentIndex) {
     const addButtonCell = document.createElement('td');
     const addButton = document.createElement('button');
-    addButton.textContent = 'Add Variation';
+    addButton.textContent = '+';
     addButton.className = 'add-button'; // Assign a class for styling if needed
     addButton.onclick = function() {
         addVariation(parentIndex);

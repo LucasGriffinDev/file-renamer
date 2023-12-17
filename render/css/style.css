@@ -1,7 +1,13 @@
 /* Overall body styling for a better background */
+:root {
+    --color1: #262F3AFF;
+    --color2: #FF4136;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f4f4;
+    color: var(--color1);
     margin: 0;
     padding-top: 60px; /* Adjusted to push the content down below the fixed status bar */
 }
@@ -23,9 +29,8 @@ body {
 /* Improved status bar styling */
 .status-bar {
     display: flex;
-justify-content: space-around;
-
-    background-color: rgba(66, 136, 192, 0.6); /* A nice shade of blue */
+    justify-content: space-around;
+    background-color: var(--color1);
     color: #ffffff;
     padding: 10px 0;
     margin-bottom: 20px;
@@ -38,20 +43,7 @@ justify-content: space-around;
     z-index: 999;
 }
 
-/* Slider button inside status bar */
-#slider {
-    border: none;
-    width: 50px;
-    height: 25px;
-    background-color: #FF4136;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    text-align: center;
-    line-height: 25px;
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
+
 
 /* Table styling */
 table {
