@@ -6,6 +6,20 @@ body {
     padding-top: 60px; /* Adjusted to push the content down below the fixed status bar */
 }
 
+.editable {
+    cursor: pointer;
+    /* Any other styling you want for editable cells */
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
 /* Improved status bar styling */
 .status-bar {
     display: flex;
@@ -65,8 +79,11 @@ th {
 
 
 
+
 /* Container styles */
 .table-container {
+    display: flex;
+    flex-direction: column;
     margin: auto;
     width: 80%;
     padding: 20px;

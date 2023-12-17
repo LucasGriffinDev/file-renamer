@@ -52,49 +52,23 @@ function ensureMappingsFileExists() {
 function createButtons(parentIndex, variationIndex) {
     const buttonCell = document.createElement('td');
     buttonCell.className = 'action-buttons';
-    const editButton = document.createElement('button');
 
-
-    editButton.textContent = 'Edit';
-    editButton.className = 'edit';
-    editButton.onclick = function() {
-        let mappings = readJson().mappings;
-        const currentText = mappings[parentIndex].variations[variationIndex];
-        const inputField = document.createElement('input');
-        inputField.type = 'text';
-        inputField.value = currentText;
-
-        // When user presses Enter, save the new text
-        inputField.onkeypress = function(event) {
-            if (event.key === 'Enter') {
-                updateVariation(parentIndex, variationIndex, inputField.value);
-                populateTable(readJson().mappings); // Refresh the table
-            }
-        };
-
-        // Replace the text cell with the input field
-        const variationCell = this.parentNode.previousSibling;
-        variationCell.innerHTML = '';
-        variationCell.appendChild(inputField);
-        inputField.focus();
-    };
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
+    deleteButton.className = 'delete-button';
     deleteButton.onclick = function() {
         deleteVariation(parentIndex, variationIndex); // Delete the variation
     };
 
 
-    buttonCell.appendChild(editButton);
+
     buttonCell.appendChild(deleteButton);
     return buttonCell;
 }
 
 function createAddButton(parentIndex) {
     const addButtonCell = document.createElement('td');
-    addButtonCell.colSpan = 3; // Span across all columns, adjust as needed
-
     const addButton = document.createElement('button');
     addButton.textContent = 'Add Variation';
     addButton.className = 'add-button'; // Assign a class for styling if needed
@@ -102,6 +76,7 @@ function createAddButton(parentIndex) {
         addVariation(parentIndex);
     };
     addButtonCell.appendChild(addButton);
+    addButtonCell.classList = 'action-buttons';
     return addButtonCell;
 }
 
@@ -125,6 +100,28 @@ function populateTable(mappings) {
 
             const variationCell = document.createElement('td');
             variationCell.textContent = variation;
+            variationCell.className = 'editable';
+            variationCell.addEventListener('click', function() {
+                // Only if it's not already an input field
+                if (!this.firstChild || this.firstChild.nodeName !== 'INPUT') {
+                    const inputField = document.createElement('input');
+                    inputField.type = 'text';
+                    inputField.value = variation;
+
+                    // Save on Enter key
+                    inputField.onkeypress = function(event) {
+                        if (event.key === 'Enter') {
+                            updateVariation(parentIndex, variationIndex, inputField.value);
+                            populateTable(readJson().mappings); // Refresh the table
+                        }
+                    };
+
+                    // Replace text with input field
+                    variationCell.innerHTML = '';
+                    variationCell.appendChild(inputField);
+                    inputField.focus();
+                }
+            });
             variationRow.appendChild(variationCell);
 
             variationRow.appendChild(createButtons(parentIndex, variationIndex));
