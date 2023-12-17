@@ -3,8 +3,11 @@
     {
       "targetName": "0. Nomination form to OES",
       "variations": [
+        "Screenshot",
+        "0._Nomination_form_sent_to_OES",
         "0._Nomination_form_to_OES",
-        "0._Nomination_Form_sent_to_OES"
+        "0._Nomination_Form_sent_to_OES",
+        "0._Nomination_to_OES"
       ]
     },
     {
@@ -62,15 +65,7 @@
         "7._Proof_of_Decomission",
         "7._Proof_of_decomission",
         "7._Proof_of_Decommission"
-      ],
-      "options": {
-        "moveToParent": [
-          true,
-          false,
-          false,
-          false
-        ]
-      }
+      ]
     },
     {
       "targetName": "0. Compliance Form.pdf",
@@ -90,6 +85,15 @@
       "targetName": "8. Installer Existing System Declaration",
       "variations": [
         "insta"
+      ]
+    }
+  ],
+  "deleteMappings": [
+    {
+      "targetName": "nswCOC",
+      "variations": [
+        "signature",
+        "sign"
       ]
     }
   ],

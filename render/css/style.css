@@ -17,6 +17,18 @@ body {
     /* Any other styling you want for editable cells */
 }
 
+
+#rename-header {
+    cursor: pointer;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+
 .delete-button {
     background-color: #dc3545;
     color: white;
@@ -54,9 +66,7 @@ table {
 
 }
 
-table:nth-of-type(2) {
-    margin-left: 1em
-}
+
 
 th, td {
     border: 1px solid #ddd; /* Lighter border for less contrast */

@@ -16,38 +16,39 @@ const folderRegex = /\d{6}/;
 
 // Function to rename files in a given folder based on mappings
 function renameFilesInFolder(folderPath) {
-    fs.readdir(folderPath, (err, files) => {
+    fs.readdir(folderPath, { withFileTypes: true }, (err, entries) => {
         if (err) {
             console.error('Error reading the folder:', err);
             return;
         }
 
-        files.forEach(file => {
-            // Ignore directories
-            if (fs.statSync(path.join(folderPath, file)).isDirectory()) {
-                return;
+        entries.forEach(entry => {
+            const fullPath = path.join(folderPath, entry.name);
+
+            // If entry is a directory, recursively call this function
+            if (entry.isDirectory()) {
+                renameFilesInFolder(fullPath);
+            } else {
+                // Process file renaming
+                renameMappings.forEach(mapping => {
+                    if (mapping.variations.some(variation => entry.name.includes(variation))) {
+                        const newFileName = mapping.targetName + path.extname(entry.name);
+                        const newFilePath = path.join(folderPath, newFileName);
+
+                        fs.rename(fullPath, newFilePath, err => {
+                            if (err) {
+                                console.error(`Error renaming ${entry.name} to ${newFileName}:`, err);
+                            } else {
+                                console.log(`Renamed ${entry.name} to ${newFileName}`);
+                            }
+                        });
+                    }
+                });
             }
-
-            // Check each file against the rename mappings
-            renameMappings.forEach(mapping => {
-                // Check if the file name includes any variation from the mapping
-                if (mapping.variations.some(variation => file.includes(variation))) {
-                    const newFileName = mapping.targetName + path.extname(file);
-                    const newFilePath = path.join(folderPath, newFileName);
-
-                    // Rename the file
-                    fs.rename(path.join(folderPath, file), newFilePath, err => {
-                        if (err) {
-                            console.error(`Error renaming ${file} to ${newFileName}:`, err);
-                        } else {
-                            console.log(`Renamed ${file} to ${newFileName}`);
-                        }
-                    });
-                }
-            });
         });
     });
 }
+
 
 // Function to process each folder in the Downloads directory
 function processFoldersForRenaming(folderPath) {

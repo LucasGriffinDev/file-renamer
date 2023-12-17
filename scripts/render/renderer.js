@@ -6,20 +6,26 @@ const { populateCheckingTable } = require('../scripts/render/checkingTable.js');
 const {readJson } = require('../scripts/CRUD/readJson.js');
 
 
-function writeMappings(updatedMappings) {
-    let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
-    jsonData.mappings = updatedMappings;
-    let data = JSON.stringify(jsonData, null, 2);
+function writeMappings(updatedJsonData) {
+    let data = JSON.stringify(updatedJsonData, null, 2);
     fs.writeFileSync(mappingsPath, data);
 }
 
 
-function deleteVariation(parentIndex, variationIndex) {
-    let mappings = readJson().mappings;
-    mappings[parentIndex].variations.splice(variationIndex, 1);
-    writeMappings(mappings);
-    populateTable(mappings); // Repopulate the table after deletion
+
+function deleteVariation(dataType, parentIndex, variationIndex) {
+    let jsonData = readJson();
+    jsonData[dataType][parentIndex].variations.splice(variationIndex, 1);
+
+    writeMappings(jsonData); // Write the entire jsonData back to the file
+
+    if (dataType === 'mappings') {
+        populateTable(jsonData.mappings);
+    } else {
+        populateDeleteTable(jsonData.deleteMappings);
+    }
 }
+
 
 function updateVariation(parentIndex, variationIndex, newValue) {
     let mappings = readJson().mappings;
@@ -46,10 +52,12 @@ function ensureMappingsFileExists() {
     if (!fs.existsSync(mappingsPath)) {
         let initialData = []; // Your default data or an empty array
         writeMappings(initialData);
+    } else {
+        console.log('File doest exists')
     }
 }
 
-function createButtons(parentIndex, variationIndex) {
+function createDeleteButton(dataType, parentIndex, variationIndex) {
     const buttonCell = document.createElement('td');
     buttonCell.className = 'action-buttons';
 
@@ -58,7 +66,7 @@ function createButtons(parentIndex, variationIndex) {
     deleteButton.textContent = 'X';
     deleteButton.className = 'delete-button';
     deleteButton.onclick = function() {
-        deleteVariation(parentIndex, variationIndex); // Delete the variation
+        deleteVariation(dataType, parentIndex, variationIndex);
     };
 
 
@@ -79,6 +87,9 @@ function createAddButton(parentIndex) {
     addButtonCell.classList = 'action-buttons';
     return addButtonCell;
 }
+
+
+
 
 
 function populateTable(mappings) {
@@ -124,7 +135,7 @@ function populateTable(mappings) {
             });
             variationRow.appendChild(variationCell);
 
-            variationRow.appendChild(createButtons(parentIndex, variationIndex));
+            variationRow.appendChild(createDeleteButton('mappings', parentIndex, variationIndex)); // In populateTable
             tableBody.appendChild(variationRow);
         });
 
@@ -137,12 +148,52 @@ function populateTable(mappings) {
     });
 }
 
+function populateDeleteTable(deleteMappings) {
+    const deleteTableBody = document.getElementById('delete-table-body');
+    deleteTableBody.innerHTML = ''; // Clear the table before repopulating
+
+    deleteMappings.forEach((mapping, parentIndex) => {
+        const totalRows = mapping.variations.length + 1;
+
+        mapping.variations.forEach((variation, variationIndex) => {
+            const variationRow = document.createElement('tr');
+
+            if (variationIndex === 0) {
+                const targetCell = document.createElement('td');
+                targetCell.textContent = mapping.targetName;
+                targetCell.rowSpan = totalRows;
+                variationRow.appendChild(targetCell);
+            }
+
+            const variationCell = document.createElement('td');
+            variationCell.textContent = variation;
+            variationCell.className = 'editable';
+            variationRow.appendChild(variationCell);
+
+            variationRow.appendChild(createDeleteButton('deleteMappings', parentIndex, variationIndex)); // Corrected here
+            deleteTableBody.appendChild(variationRow);
+        });
+
+        // Add the extra empty row for adding new variations, adjust if needed
+        const emptyRow = document.createElement('tr');
+        const emptyVariationCell = document.createElement('td');
+        emptyRow.appendChild(emptyVariationCell);
+        emptyRow.appendChild(createAddButton(parentIndex)); // Adjust for delete functionality
+        deleteTableBody.appendChild(emptyRow);
+    });
+}
+
+
+
 ensureMappingsFileExists();
 
 document.addEventListener('DOMContentLoaded', () => {
+
     let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
     document.getElementById('targetFolder').textContent = jsonData.settings.targetDirectory;
     populateTable(jsonData.mappings);
+    console.log(jsonData.deleteMappings);
+    populateDeleteTable(jsonData.deleteMappings);
     populateCheckingTable(jsonData.mappings);
 });
 
