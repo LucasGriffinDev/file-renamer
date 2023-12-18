@@ -92,9 +92,14 @@
     {
       "targetName": "nswCOC",
       "variations": [
+        "nswCOC"
+      ]
+    },
+    {
+      "targetName": "signature",
+      "variations": [
         "signature",
-        "sign",
-        "nswCOC_418759.pdf"
+        "sign"
       ]
     }
   ],
