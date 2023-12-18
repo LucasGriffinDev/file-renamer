@@ -84,7 +84,7 @@
     {
       "targetName": "8. Installer Existing System Declaration",
       "variations": [
-        "insta"
+        "instaasd"
       ]
     }
   ],
@@ -93,7 +93,8 @@
       "targetName": "nswCOC",
       "variations": [
         "signature",
-        "sign"
+        "sign",
+        "nswCOC_418759.pdf"
       ]
     }
   ],

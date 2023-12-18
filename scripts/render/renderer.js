@@ -7,8 +7,10 @@ const {readJson } = require('../scripts/CRUD/readJson.js');
 
 
 function writeMappings(updatedJsonData) {
+    console.log('Writing mappings to file:', updatedJsonData); // Debugging
     let data = JSON.stringify(updatedJsonData, null, 2);
     fs.writeFileSync(mappingsPath, data);
+    console.log('Write complete'); // Debugging
 }
 
 
@@ -28,18 +30,31 @@ function deleteVariation(dataType, parentIndex, variationIndex) {
 
 
 function updateVariation(parentIndex, variationIndex, newValue) {
-    let mappings = readJson().mappings;
-    mappings[parentIndex].variations[variationIndex] = newValue;
-    writeMappings(mappings);
+    let jsonData = readJson();
+    jsonData.mappings[parentIndex].variations[variationIndex] = newValue;
+    writeMappings(jsonData); // Pass the entire jsonData object
 }
-function addVariation(parentIndex) {
+
+function addVariation(dataType, parentIndex) {
     ipcRenderer.invoke('show-prompt', 'Enter the new variation name:', '')
         .then((newVariationName) => {
             if (newVariationName) {
-                let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
-                jsonData.mappings[parentIndex].variations.push(newVariationName);
-                fs.writeFileSync(mappingsPath, JSON.stringify(jsonData, null, 2));
-                populateTable(jsonData.mappings);
+                let jsonData = readJson();
+
+                if (jsonData[dataType] && jsonData[dataType][parentIndex]) {
+
+                    jsonData[dataType][parentIndex].variations.push(newVariationName);
+
+                    writeMappings(jsonData); // Call this function to save changes
+
+                    if (dataType === 'mappings') {
+                        populateTable(jsonData.mappings);
+                    } else {
+                        populateDeleteTable(jsonData.deleteMappings);
+                    }
+                } else {
+                    console.error('Invalid dataType or parentIndex');
+                }
             }
         })
         .catch(error => {
@@ -48,14 +63,18 @@ function addVariation(parentIndex) {
 }
 
 
+
+
+
 function ensureMappingsFileExists() {
     if (!fs.existsSync(mappingsPath)) {
-        let initialData = []; // Your default data or an empty array
+        let initialData = {}; // Use an empty object or the initial structure of your JSON
         writeMappings(initialData);
     } else {
-        console.log('File doest exists')
+        console.log('File exists'); // Correct message
     }
 }
+
 
 function createDeleteButton(dataType, parentIndex, variationIndex) {
     const buttonCell = document.createElement('td');
@@ -75,18 +94,19 @@ function createDeleteButton(dataType, parentIndex, variationIndex) {
     return buttonCell;
 }
 
-function createAddButton(parentIndex) {
+function createAddButton(dataType, parentIndex) {
     const addButtonCell = document.createElement('td');
     const addButton = document.createElement('button');
     addButton.textContent = '+';
-    addButton.className = 'add-button'; // Assign a class for styling if needed
+    addButton.className = 'add-button';
     addButton.onclick = function() {
-        addVariation(parentIndex);
+        addVariation(dataType, parentIndex);
     };
     addButtonCell.appendChild(addButton);
     addButtonCell.classList = 'action-buttons';
     return addButtonCell;
 }
+
 
 
 
@@ -143,7 +163,9 @@ function populateTable(mappings) {
         const emptyRow = document.createElement('tr');
         const emptyVariationCell = document.createElement('td');
         emptyRow.appendChild(emptyVariationCell);
-        emptyRow.appendChild(createAddButton(parentIndex)); // Implement createAddButton as needed
+        emptyRow.appendChild(createAddButton('mappings', parentIndex));
+
+
         tableBody.appendChild(emptyRow);
     });
 }
@@ -178,7 +200,7 @@ function populateDeleteTable(deleteMappings) {
         const emptyRow = document.createElement('tr');
         const emptyVariationCell = document.createElement('td');
         emptyRow.appendChild(emptyVariationCell);
-        emptyRow.appendChild(createAddButton(parentIndex)); // Adjust for delete functionality
+        emptyRow.appendChild(createAddButton('deleteMappings', parentIndex));
         deleteTableBody.appendChild(emptyRow);
     });
 }
@@ -192,9 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
     document.getElementById('targetFolder').textContent = jsonData.settings.targetDirectory;
     populateTable(jsonData.mappings);
-    console.log(jsonData.deleteMappings);
     populateDeleteTable(jsonData.deleteMappings);
-    populateCheckingTable(jsonData.mappings);
 });
 
 document.getElementById('folder-picker').addEventListener('click', () => {
