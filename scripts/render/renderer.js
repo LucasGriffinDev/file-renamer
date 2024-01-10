@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const mappingsPath = path.join(__dirname, '../profiles/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
-const { populateCheckingTable } = require('../scripts/render/checkingTable.js');
 const {readJson } = require('../scripts/CRUD/readJson.js');
+const checkForUpdates  = require('../scripts/update/update.js');
 
 
 function writeMappings(updatedJsonData) {
@@ -220,6 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('folder-picker').addEventListener('click', () => {
     ipcRenderer.send('open-folder-dialog');
 });
+
+document.getElementById("update-app").addEventListener('click', () => {
+    alert('clicked!')
+        console.log('checkForUpdates function:', checkForUpdates);
+        checkForUpdates()
+}
+);
 
 ipcRenderer.on('folder-selected', (event, folderPath) => {
     document.getElementById('targetFolder').textContent = folderPath;

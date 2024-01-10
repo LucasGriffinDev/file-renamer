@@ -7,7 +7,8 @@
         "0._Nomination_form_sent_to_OES",
         "0._Nomination_form_to_OES",
         "0._Nomination_Form_sent_to_OES",
-        "0._Nomination_to_OES"
+        "0._Nomination_to_OES",
+        "test 23"
       ]
     },
     {
@@ -84,19 +85,13 @@
     {
       "targetName": "8. Installer Existing System Declaration",
       "variations": [
-        "instaasd"
+        "insta"
       ]
     }
   ],
   "deleteMappings": [
     {
       "targetName": "nswCOC",
-      "variations": [
-        "nswCOC"
-      ]
-    },
-    {
-      "targetName": "signature",
       "variations": [
         "signature",
         "sign"
