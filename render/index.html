@@ -4,14 +4,19 @@
     <title>🫂CSO file buddy🫂</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="status-bar">
-<button id="start-app">Organise!</button>
+    <button id="start-app">Organise!</button>
     <button id="update-app">update</button>
+    <button id="guide-app">user guide</button>
 </div>
 <div class="table-container" >
+    <div id="feedback-container" class="feedback-container">
+        <span id="feedback-icon" class="feedback-icon">🔧</span>
+    </div>
 
 
 <table>

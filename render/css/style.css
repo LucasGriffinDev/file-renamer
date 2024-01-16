@@ -157,3 +157,34 @@ button:hover.edit {
     background-color: white; /* White background */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
+
+/* visual feed back drop down transitioner*/
+
+.feedback-container {
+    position: fixed;
+    top: -50px; /* Hide the container initially */
+    left: 0;
+    right: 0;
+    text-align: center;
+    transition: top 0.5s ease;
+}
+
+.feedback-icon {
+    font-size: 30px;
+}
+
+/* Animation for sliding down */
+.show-feedback {
+    top: 10px; /* Adjust as needed for visibility */
+}
+
+/* Transition for changing icon */
+.change-icon {
+    transition: transform 0.5s ease;
+    transform: rotate(0);
+}
+
+/* Rotate icon for effect */
+.rotate-icon {
+    transform: rotate(360deg);
+}

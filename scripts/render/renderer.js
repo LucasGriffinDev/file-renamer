@@ -3,7 +3,7 @@ const path = require('path');
 const mappingsPath = path.join(__dirname, '../profiles/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
 const {readJson } = require('../scripts/CRUD/readJson.js');
-const checkForUpdates  = require('../scripts/update/update.js');
+const checkForUpdates  = require('../main/update/update.js');
 
 
 function writeMappings(updatedJsonData) {
@@ -60,6 +60,10 @@ function addVariation(dataType, parentIndex) {
         .catch(error => {
             console.error('Prompt error:', error);
         });
+}
+
+function openUserGuide() {
+    ipcRenderer.invoke('open-user-guide');
 }
 
 
@@ -222,8 +226,6 @@ document.getElementById('folder-picker').addEventListener('click', () => {
 });
 
 document.getElementById("update-app").addEventListener('click', () => {
-    alert('clicked!')
-        console.log('checkForUpdates function:', checkForUpdates);
         checkForUpdates()
 }
 );
@@ -236,5 +238,9 @@ ipcRenderer.on('folder-selected', (event, folderPath) => {
     // Call the renaming function with the selected folder path
     const { processFoldersForRenaming } = require('./scripts/naming/renaming');
     processFoldersForRenaming(folderPath);
+});
+
+document.getElementById('guide-app').addEventListener('click', () => {
+    openUserGuide();
 });
 

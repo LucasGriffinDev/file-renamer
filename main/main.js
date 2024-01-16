@@ -27,6 +27,21 @@ ipcMain.handle('show-prompt',
         });
     });
 
+
+// user guide
+ipcMain.handle('open-user-guide', (event) => {
+    const win = new BrowserWindow({
+        width: 700,
+        height: 500,
+        webPreferences: {
+            nodeIntegration: false, // Changed for security
+            contextIsolation: true   // Changed for security
+        }
+    });
+    win.loadFile('./render/userGuide.html');
+});
+
+
 // to choose a new folder
 
 ipcMain.on('open-folder-dialog', (event) => {
