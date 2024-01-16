@@ -4,6 +4,7 @@ const path = require('path');
 const { autoUpdater } = require('electron-updater');
 
 
+
 //prompt for new entry input
 ipcMain.handle('show-prompt',
     async (event, message, defaultValue) => {
@@ -26,6 +27,21 @@ ipcMain.handle('show-prompt',
         });
     });
 
+
+// user guide
+ipcMain.handle('open-user-guide', (event) => {
+    const win = new BrowserWindow({
+        width: 700,
+        height: 500,
+        webPreferences: {
+            nodeIntegration: false, // Changed for security
+            contextIsolation: true   // Changed for security
+        }
+    });
+    win.loadFile('./render/userGuide.html');
+});
+
+
 // to choose a new folder
 
 ipcMain.on('open-folder-dialog', (event) => {
@@ -41,7 +57,7 @@ ipcMain.on('open-folder-dialog', (event) => {
 });
 
 // the main window of the app
-function createWindow() {
+function createMainWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -50,24 +66,11 @@ function createWindow() {
             contextIsolation: false
         }
     });
-    console.log('loading file')
+
     win.loadFile('./render/index.html');
-    console.log('updater started')
-    autoUpdater.checkForUpdatesAndNotify();
-    console.log('updater finished?')
-    // Event: Update Available
-    autoUpdater.on('update-available', () => {
-        console.log('Update available. Downloading...');
-        alert('Update available. Downloading...');
-    });
 
-    // Event: Update Downloaded
-    autoUpdater.on('update-downloaded', () => {
-        console.log('Update downloaded. It will be installed on restart.');
-        alert('Update downloaded. It will be installed on restart.');
-        autoUpdater.quitAndInstall();
 
-    });
 }
 
-app.whenReady().then(createWindow);
+
+app.whenReady().then(createMainWindow);

@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const mappingsPath = path.join(__dirname, '../profiles/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
-const { populateCheckingTable } = require('../scripts/render/checkingTable.js');
 const {readJson } = require('../scripts/CRUD/readJson.js');
+const checkForUpdates  = require('../main/update/update.js');
 
 
 function writeMappings(updatedJsonData) {
@@ -60,6 +60,10 @@ function addVariation(dataType, parentIndex) {
         .catch(error => {
             console.error('Prompt error:', error);
         });
+}
+
+function openUserGuide() {
+    ipcRenderer.invoke('open-user-guide');
 }
 
 
@@ -221,6 +225,11 @@ document.getElementById('folder-picker').addEventListener('click', () => {
     ipcRenderer.send('open-folder-dialog');
 });
 
+document.getElementById("update-app").addEventListener('click', () => {
+        checkForUpdates()
+}
+);
+
 ipcRenderer.on('folder-selected', (event, folderPath) => {
     document.getElementById('targetFolder').textContent = folderPath;
     let jsonData = JSON.parse(fs.readFileSync(mappingsPath));
@@ -229,5 +238,9 @@ ipcRenderer.on('folder-selected', (event, folderPath) => {
     // Call the renaming function with the selected folder path
     const { processFoldersForRenaming } = require('./scripts/naming/renaming');
     processFoldersForRenaming(folderPath);
+});
+
+document.getElementById('guide-app').addEventListener('click', () => {
+    openUserGuide();
 });
 
