@@ -73,7 +73,7 @@ function openUserGuide() {
 function ensureMappingsFileExists() {
     if (!fs.existsSync(mappingsPath)) {
         let initialData = {}; // Use an empty object or the initial structure of your JSON
-        I'(initialData);
+        (initialData);
     } else {
         console.log('File exists'); // Correct message
     }
