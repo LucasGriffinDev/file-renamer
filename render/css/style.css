@@ -162,7 +162,7 @@ button:hover.edit {
 
 .feedback-container {
     position: fixed;
-    top: -50px; /* Hide the container initially */
+    /*top: -50px; !* Hide the container initially *!*/
     left: 0;
     right: 0;
     text-align: center;
@@ -171,6 +171,12 @@ button:hover.edit {
 
 .feedback-icon {
     font-size: 30px;
+    opacity: 1; /* Fully visible */
+    transition: opacity 2s ease; /* Transition for opacity change */
+}
+
+.fade-out {
+    opacity: 0; /* Fully transparent */
 }
 
 /* Animation for sliding down */

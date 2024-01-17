@@ -1,34 +1,42 @@
 const { processFoldersForRenaming } = require('../scripts/naming/renaming.js');
 const { processFoldersForDeletion } = require('../scripts/deletingFiles/deleteFiles.js');
 
-document.getElementById('start-app').addEventListener('click', () => {
-    const targetFolderPath = document.getElementById('targetFolder').textContent; // Get the current target folder path
+document.getElementById('start-app').addEventListener('click', async () => {
+    const targetFolderPath = document.getElementById('targetFolder').textContent;
+    showFeedbackIcon('⚙️'); // Show the wrench icon
 
-    // Start the process and show the feedback icon
-    showFeedbackIcon('🔧'); // Show the wrench icon
-
-    // Perform the operations
-    processFoldersForRenaming(targetFolderPath); // Pass the target folder path to the function
-    processFoldersForDeletion(targetFolderPath);
-
-    // Simulate the completion of the process
-    // Replace with actual logic to detect when both functions have completed
-    setTimeout(() => {
-        showFeedbackIcon('✅'); // Change to checkmark icon
-    }, 3000); // Adjust timing based on your process duration
+    try {
+        // Assuming these functions are now async, use await to handle them properly
+        await processFoldersForRenaming(targetFolderPath);
+        await processFoldersForDeletion(targetFolderPath);
+        showFeedbackIcon('✅'); // Change to checkmark icon on completion
+    } catch (error) {
+        console.error('An error occurred:', error);
+        showFeedbackIcon('❌'); // Show an error icon or handle the error appropriately
+    } finally {
+        // Hide the feedback icon after a delay
+        setTimeout(() => {
+            document.getElementById('feedback-container').classList.remove('show-feedback');
+        }, 2000);
+    }
 });
 
 function showFeedbackIcon(icon) {
     const feedbackContainer = document.getElementById('feedback-container');
     const feedbackIcon = document.getElementById('feedback-icon');
 
-    feedbackIcon.textContent = icon; // Set the icon
-    feedbackContainer.classList.add('show-feedback'); // Show the container
+    feedbackIcon.textContent = icon;
+    feedbackContainer.classList.add('show-feedback');
 
     if (icon === '✅') {
-        // Hide the feedback icon after a delay
+        setTimeout(() => {
+            feedbackIcon.classList.add('fade-out'); // Trigger fade out after the icon appears
+        }, 2200);
+
         setTimeout(() => {
             feedbackContainer.classList.remove('show-feedback');
-        }, 2000); // Adjust timing as needed
+            feedbackIcon.classList.remove('fade-out'); // Reset for next use
+        }, 200);
     }
 }
+
