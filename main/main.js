@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
-const userPrompt = require('electron-osx-prompt');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
 
@@ -72,5 +71,35 @@ function createMainWindow() {
 
 }
 
+ipcMain.on('trigger-update-check', (event) => {
+    console.log('ipc received')
+        checkForUpdates()
+});
 
+function checkForUpdates() {
+    console.log('checkForUpdates called');
+    autoUpdater.checkForUpdatesAndNotify();
+
+    autoUpdater.on('update-available', () => {
+        console.log('Update available. Downloading...');
+        // Here, you would ideally inform the user that an update is available and is being downloaded.
+        // This can be done through your app's UI.
+    });
+
+    autoUpdater.on('update-not-available', () => {
+        console.log('No updates available.');
+        // Inform the user that the application is up-to-date.
+    });
+
+    autoUpdater.on('update-downloaded', () => {
+        console.log('Update downloaded. It will be installed on restart.');
+        // Prompt the user to restart the app to install the update.
+        autoUpdater.quitAndInstall();
+    });
+
+    autoUpdater.on('error', (err) => {
+        console.error('Update error:', err);
+        // Notify the user that an error occurred while trying to update.
+    });
+}
 app.whenReady().then(createMainWindow);

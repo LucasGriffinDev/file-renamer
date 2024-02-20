@@ -194,3 +194,11 @@ button:hover.edit {
 .rotate-icon {
     transform: rotate(360deg);
 }
+
+#guide-app {
+    display: none;
+}
+
+#delete-table-container {
+    display: none;
+}

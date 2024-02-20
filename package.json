@@ -1,11 +1,12 @@
 {
   "name": "file-renamer",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "main/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon",
+    "start": "main/main.js",
+    "dev": "nodemon",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
@@ -30,7 +31,7 @@
     },
     "mac": {
       "target": "dmg",
-      "category": "your.app.category.type"
+      "category": "public.app-category.utilities"
     },
     "linux": {
       "target": ["AppImage", "deb"]
@@ -38,7 +39,7 @@
     "publish": {
       "provider": "github",
       "repo": "file-renamer",
-      "owner": "lucasgriffindev"
+      "owner": "LucasGriffinDev"
     }
   }
 }

@@ -3,12 +3,11 @@
     {
       "targetName": "0. Nomination form to OES",
       "variations": [
-        "Screenshotas",
+        "Screenshot",
         "0._Nomination_form_sent_to_OES",
         "0._Nomination_form_to_OES",
         "0._Nomination_Form_sent_to_OES",
-        "0._Nomination_to_OES",
-        "test 23"
+        "0._Nomination_to_OES"
       ]
     },
     {
@@ -91,14 +90,10 @@
   ],
   "deleteMappings": [
     {
-      "targetName": "nswCOC",
-      "variations": [
-        "signature",
-        "sign"
-      ]
+      "targetName": "nswCOC"
     }
   ],
   "settings": {
-    "targetDirectory": "/Users/lucasgriffin/Downloads"
+    "targetDirectory": "C:\\Users\\lucas\\Downloads\\chromagen"
   }
 }

@@ -3,7 +3,6 @@ const path = require('path');
 const mappingsPath = path.join(__dirname, '../profiles/chromagenProfile.json');
 const { ipcRenderer } = require('electron');
 const {readJson } = require('../scripts/CRUD/readJson.js');
-const checkForUpdates  = require('../main/update/update.js');
 
 
 function writeMappings(updatedJsonData) {
@@ -178,36 +177,31 @@ function populateDeleteTable(deleteMappings) {
     const deleteTableBody = document.getElementById('delete-table-body');
     deleteTableBody.innerHTML = ''; // Clear the table before repopulating
 
-    deleteMappings.forEach((mapping, parentIndex) => {
-        const totalRows = mapping.variations.length + 1;
+    deleteMappings.forEach((targetName) => {
+        const row = document.createElement('tr');
 
-        mapping.variations.forEach((variation, variationIndex) => {
-            const variationRow = document.createElement('tr');
+        // Target Name Cell
+        const targetCell = document.createElement('td');
+        targetCell.textContent = targetName;
+        row.appendChild(targetCell);
 
-            if (variationIndex === 0) {
-                const targetCell = document.createElement('td');
-                targetCell.textContent = mapping.targetName;
-                targetCell.rowSpan = totalRows;
-                variationRow.appendChild(targetCell);
-            }
+        // Delete Button Cell
+        const buttonCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.className = 'delete-button';
+        deleteButton.onclick = function() {
+            // Implement the delete function here
+            console.log(`Delete all files containing: ${targetName}`);
+            // Here you would call a function to delete files containing the targetName
+        };
+        buttonCell.appendChild(deleteButton);
+        row.appendChild(buttonCell);
 
-            const variationCell = document.createElement('td');
-            variationCell.textContent = variation;
-            variationCell.className = 'editable';
-            variationRow.appendChild(variationCell);
-
-            variationRow.appendChild(createDeleteButton('deleteMappings', parentIndex, variationIndex)); // Corrected here
-            deleteTableBody.appendChild(variationRow);
-        });
-
-        // Add the extra empty row for adding new variations, adjust if needed
-        const emptyRow = document.createElement('tr');
-        const emptyVariationCell = document.createElement('td');
-        emptyRow.appendChild(emptyVariationCell);
-        emptyRow.appendChild(createAddButton('deleteMappings', parentIndex));
-        deleteTableBody.appendChild(emptyRow);
+        deleteTableBody.appendChild(row);
     });
 }
+
 
 
 
@@ -226,9 +220,8 @@ document.getElementById('folder-picker').addEventListener('click', () => {
 });
 
 document.getElementById("update-app").addEventListener('click', () => {
-        checkForUpdates()
-}
-);
+    ipcRenderer.send('trigger-update-check');
+});
 
 ipcRenderer.on('folder-selected', (event, folderPath) => {
     document.getElementById('targetFolder').textContent = folderPath;
