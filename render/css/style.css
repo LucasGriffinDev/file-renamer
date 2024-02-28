@@ -195,9 +195,9 @@ button:hover.edit {
     transform: rotate(360deg);
 }
 
-#guide-app {
-    display: none;
-}
+/*#guide-app {*/
+/*    display: none;*/
+/*}*/
 
 #delete-table-container {
     display: none;

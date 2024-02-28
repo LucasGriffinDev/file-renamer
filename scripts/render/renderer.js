@@ -220,6 +220,7 @@ document.getElementById('folder-picker').addEventListener('click', () => {
 });
 
 document.getElementById("update-app").addEventListener('click', () => {
+    alert("no updates available")
     ipcRenderer.send('trigger-update-check');
 });
 

@@ -8,7 +8,7 @@ document.getElementById('start-app').addEventListener('click', async () => {
     try {
         // Assuming these functions are now async, use await to handle them properly
         await processFoldersForRenaming(targetFolderPath);
-        await processFoldersForDeletion(targetFolderPath);
+        // await processFoldersForDeletion(targetFolderPath);
         showFeedbackIcon('✅'); // Change to checkmark icon on completion
     } catch (error) {
         console.error('An error occurred:', error);

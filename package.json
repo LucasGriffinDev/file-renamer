@@ -5,7 +5,7 @@
   "main": "main/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "main/main.js",
+    "start": "node main/main.js",
     "dev": "nodemon",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
