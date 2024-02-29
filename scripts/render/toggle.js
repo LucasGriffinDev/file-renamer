@@ -31,12 +31,12 @@ function showFeedbackIcon(icon) {
     if (icon === '✅') {
         setTimeout(() => {
             feedbackIcon.classList.add('fade-out'); // Trigger fade out after the icon appears
-        }, 2200);
+        }, 1000);
 
         setTimeout(() => {
             feedbackContainer.classList.remove('show-feedback');
             feedbackIcon.classList.remove('fade-out'); // Reset for next use
-        }, 200);
+        }, 500);
     }
 }
 
