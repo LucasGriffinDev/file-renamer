@@ -52,6 +52,7 @@ function renameFilesInFolder(folderPath) {
 
 // Function to process each folder in the Downloads directory
 function processFoldersForRenaming(folderPath) {
+    renameFilesInFolder(folderPath);
     fs.readdir(folderPath, { withFileTypes: true }, (err, entries) => {
         if (err) {
             console.error('Error reading the Downloads directory:', err);
