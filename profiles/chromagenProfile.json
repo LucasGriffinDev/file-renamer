@@ -1,7 +1,7 @@
 {
   "mappings": [
     {
-      "targetName": "0. Nomination form to OES",
+      "targetName": "0-Nomination_Form_OES",
       "variations": [
         "Screenshot",
         "0._Nomination_form_sent_to_OES",
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "targetName": "1. Nomination Form",
+      "targetName": "1-Nomination_Form",
       "variations": [
         "nominationForm",
         "Nomination Form",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "targetName": "2. Site Assessment",
+      "targetName": "2-Site_Assessment",
       "variations": [
         "siteAssessment",
         "Site Assessment",
@@ -28,14 +28,14 @@
       ]
     },
     {
-      "targetName": "3. Tax Invoice",
+      "targetName": "3-Invoice",
       "variations": [
         "taxInvoice",
         "Tax_Invoice"
       ]
     },
     {
-      "targetName": "4. Proof of Payment",
+      "targetName": "4-POP",
       "variations": [
         "receipt",
         "4._Receipt",
@@ -43,14 +43,14 @@
       ]
     },
     {
-      "targetName": "5. CoC",
+      "targetName": "5-CoC",
       "variations": [
         "Coc",
         "5._CoC"
       ]
     },
     {
-      "targetName": "6. Post Implementation",
+      "targetName": "6-PID",
       "variations": [
         "postImplementation",
         "6._Post_Implementation",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "targetName": "7. Proof of Decommission",
+      "targetName": "7-Decom-Evidence",
       "variations": [
         "image2",
         "7._Proof_of_Decomission",
@@ -68,21 +68,21 @@
       ]
     },
     {
-      "targetName": "0. Compliance Form.pdf",
+      "targetName": "0-Compliance_Form",
       "variations": [
         "Compliance Form",
         "0._Compliance_Form"
       ]
     },
     {
-      "targetName": "0. Calculation Output (HEERs)",
+      "targetName": "0-Calculation_Output",
       "variations": [
         "Calculation Output",
         "0._Calculation_Output_(HEERs)"
       ]
     },
     {
-      "targetName": "8. Installer Existing System Declaration",
+      "targetName": "8-Installer_Existing_System_Declaration",
       "variations": [
         "insta"
       ]
